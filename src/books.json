@@ -1,0 +1,38 @@
+{
+  "21596705-0505-4857-849a-18014b27e570": {
+    "id": "21596705-0505-4857-849a-18014b27e570",
+    "title": "Test XYZ",
+    "description": "Test - XYZ DESC",
+    "pages": 199
+  },
+  "00da2b74-50a1-4b1b-b3bd-867929384992": {
+    "id": "00da2b74-50a1-4b1b-b3bd-867929384992",
+    "title": "",
+    "description": "",
+    "pages": 0
+  },
+  "60822da5-caf5-43db-b24b-67c352fc2f9f": {
+    "id": "60822da5-caf5-43db-b24b-67c352fc2f9f",
+    "title": "string",
+    "description": "string",
+    "pages": null
+  },
+  "890cf20e-e73e-4f6b-ba35-ce7c0f76d3d4": {
+    "id": "890cf20e-e73e-4f6b-ba35-ce7c0f76d3d4",
+    "title": "Test Title",
+    "description": "string",
+    "pages": 1
+  },
+  "602156e2-686c-440f-b3f4-0280affdee5f": {
+    "id": "602156e2-686c-440f-b3f4-0280affdee5f",
+    "title": "Test Title2",
+    "description": "",
+    "pages": 1
+  },
+  "d1c3a848-db82-4dc9-90e6-dbaf59394783": {
+    "id": "d1c3a848-db82-4dc9-90e6-dbaf59394783",
+    "title": "Tet",
+    "description": "",
+    "pages": 1
+  }
+}

@@ -11,16 +11,13 @@ const app = express();
 
 app.use(express.json());
 
-// Serve static files from 'public' directory
-app.use(express.static(path.join(__dirname, '../public')));
-
+// Serve Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use('/api', routes);
+// Serve static files
+app.use(express.static(path.join(__dirname, '../public')));
 
-app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, '../public/index.html'));
-});
+app.use('/api', routes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

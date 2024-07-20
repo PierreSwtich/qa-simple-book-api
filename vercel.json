@@ -12,8 +12,8 @@
       "dest": "/src/index.ts"
     },
     {
-      "src": "/api-docs",
-      "dest": "/public/api-docs"
+      "src": "/api-docs/(.*)",
+      "dest": "/src/swagger-ui/$1"
     },
     {
       "src": "/(.*)",

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book API Documentation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Book API Documentation</h1>
+    <p>Welcome to the Book API. Use this documentation to interact with the API endpoints.</p>
+  </header>
+  <div class="container">
+    <div class="content">
+      <section>
+        <h2>API Endpoints</h2>
+
+        <div class="endpoint">
+          <h2>GET /api/books</h2>
+          <p>Retrieve all books.</p>
+          <pre>
+curl -X GET "https://your-project.vercel.app/api/books" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>GET /api/books/:id</h2>
+          <p>Retrieve a book by ID.</p>
+          <pre>
+curl -X GET "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>POST /api/books</h2>
+          <p>Create a new book. Do not include the ID in the request body.</p>
+          <pre>
+curl -X POST "https://your-project.vercel.app/api/books" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
+  "title": "Book Title",
+  "description": "Book Description",
+  "pages": 123
+}'
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>PUT /api/books/:id</h2>
+          <p>Replace a book by ID. You must provide all fields in the request body.</p>
+          <pre>
+curl -X PUT "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
+  "title": "Updated Title",
+  "description": "Updated Description",
+  "pages": 456
+}'
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>PATCH /api/books/:id</h2>
+          <p>Partially update a book by ID. Only include the fields you want to update.</p>
+          <pre>
+curl -X PATCH "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
+  "title": "Partially Updated Title"
+}'
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>DELETE /api/books/:id</h2>
+          <p>Delete a book by ID.</p>
+          <pre>
+curl -X DELETE "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>DELETE /api/books</h2>
+          <p>Delete all books.</p>
+          <pre>
+curl -X DELETE "https://your-project.vercel.app/api/books" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>GET /api/books-pages</h2>
+          <p>Paginate through books. Specify the page number and the limit of books per page.</p>
+          <pre>
+curl -X GET "https://your-project.vercel.app/api/books-pages?page=1&limit=3" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>GET /api/books/filter/title</h2>
+          <p>Filter books by title.</p>
+          <pre>
+curl -X GET "https://your-project.vercel.app/api/books/filter/title?title=Book%20Title" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>GET /api/books/filter/description</h2>
+          <p>Filter books by description.</p>
+          <pre>
+curl -X GET "https://your-project.vercel.app/api/books/filter/description?description=Book%20Description" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>GET /api/books/filter/pages</h2>
+          <p>Filter books by the number of pages.</p>
+          <pre>
+curl -X GET "https://your-project.vercel.app/api/books/filter/pages?pages=123" -H "Authorization: Bearer YOUR_TOKEN"
+          </pre>
+        </div>
+
+        <div class="endpoint">
+          <h2>POST /api/login</h2>
+          <p>Authenticate and get a JWT token.</p>
+          <pre>
+curl -X POST "https://your-project.vercel.app/api/login" -H "Content-Type: application/json" -d '{
+  "username": "your-username",
+  "password": "your-password"
+}'
+          </pre>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer>
+    <p>&copy; 2024 Book API. All rights reserved.</p>
+  </footer>
+</body>
+</html>

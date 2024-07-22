@@ -3,7 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import specs from './swagger';
 import dotenv from 'dotenv';
 import path from 'path';
-import routes from './routes/routes';
+import routes from './routes';
 
 dotenv.config();
 
@@ -25,7 +25,6 @@ app.use(
 );
 
 app.get('/v1/swagger.json', (req, res) => {
-  // console.log('Swagger specs:', JSON.stringify(specs, null, 2))
   res.json(specs);
 });
 
@@ -42,5 +41,7 @@ app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
   console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
   console.log(`API served on http://localhost:${port}/api/books`);
-  console.log(`Static HTML available at http://localhost:${port}/`)
+  console.log(`Static HTML available at http://localhost:${port}/`);
+  console.log(`Current working directory: ${process.cwd()}`);
+  console.log(`Routes file path: ${path.join(process.cwd(), 'src', 'routes.ts')}`)
 });

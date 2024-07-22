@@ -6,6 +6,7 @@ import path from 'path';
 import routes from './routes';
 
 dotenv.config();
+
 const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
@@ -17,23 +18,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Swagger UI route
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
-// Serve Swagger specification
-// const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.css' };
-// const spec = JSON.parse(
-//     fs.readFileSync(path.join(__dirname, './books.json'), 'utf8')
-// );
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, options));
-
-// Serve Swagger specification separately
 app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(specs, { customCssUrl: CSS_URL })
 );
 
-app.get('/api-docs/swagger.json', (req, res) => {
+app.get('/v1/swagger.json', (req, res) => {
+  console.log('Swagger specs:', JSON.stringify(specs, null, 2))
   res.json(specs);
 });
 

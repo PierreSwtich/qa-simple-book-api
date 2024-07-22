@@ -4,6 +4,9 @@ import fs from 'fs'
 
 const currentDir = __dirname;
 console.log('Current directory:', currentDir);
+console.log('Current working directory:', process.cwd());
+console.log('Files in current directory:', fs.readdirSync(process.cwd()));
+console.log('Files in src directory:', fs.readdirSync(path.join(process.cwd(), 'src')));
 
 const tsFiles = fs.readdirSync(currentDir).filter(file => file.endsWith('.ts'));
 console.log('TS files found:', tsFiles);
@@ -27,7 +30,7 @@ const options = {
       }
     ]
   },
-  apis: [path.join(__dirname, '*.ts')] // paths to files containing OpenAPI annotations
+  apis: ['./src/*.ts'] // paths to files containing OpenAPI annotations
 };
 
 const specs = swaggerJSDoc(options);

@@ -3,7 +3,8 @@
   "builds": [
     {
       "src": "src/index.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": { "buildCommand": "npm run build" }
     },
     {
       "src": "public/**",
@@ -16,7 +17,7 @@
       "dest": "/src/index.ts"
     },
     {
-      "src": "/api-docs(/.*)?",
+      "src": "/api-docs",
       "dest": "/src/index.ts"
     },
     {

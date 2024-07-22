@@ -30,7 +30,7 @@ const options = {
       }
     ]
   },
-  apis: ['src/*.ts'] // paths to files containing OpenAPI annotations
+  apis: [`${__dirname}/*.ts`] // paths to files containing OpenAPI annotations
 };
 
 const specs = swaggerJSDoc(options);

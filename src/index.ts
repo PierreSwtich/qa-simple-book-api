@@ -14,10 +14,16 @@ app.use(express.json());
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
+// CDN CSS for Swagger UI
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+
 // Swagger UI route
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+// Set up Swagger UI with CDN CSS
 app.use('/api-docs', swaggerUi.serve);
-app.get('/api-docs', swaggerUi.setup(specs, {
+app.get('/api-docs', swaggerUi.setup(specs, { 
+  customCssUrl: CSS_URL,
   explorer: true,
   swaggerOptions: {
     url: '/api-docs/swagger.json'

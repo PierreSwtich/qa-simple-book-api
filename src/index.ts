@@ -25,12 +25,13 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(
   "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(specs, { customCssUrl: CSS_URL })
+  swaggerUi.setup(specs, { 
+    customCssUrl: '/swagger-ui.css',
+    customSiteTitle: "Book API Documentation"
+  })
 );
 
 app.get('/v1/swagger.json', (req, res) => {
-  console.log('Swagger spec requested');
-  console.log('Specs:', JSON.stringify(specs, null, 2));
   res.json(specs);
 });
 

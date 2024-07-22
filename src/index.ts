@@ -15,44 +15,6 @@ const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
   const customCss = `
-  .swagger-ui .opblock-summary-path {
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-  }
-  .swagger-ui .opblock-summary-path a {
-    text-decoration: none !important;
-    color: inherit !important;
-  }
-  .swagger-ui .opblock-summary-description {
-    text-align: left !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-  }
-  .swagger-ui .opblock-summary {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-  }
-  .swagger-ui .opblock-summary-method, 
-  .swagger-ui .opblock-summary-description, 
-  .swagger-ui .opblock-summary-operation-id {
-    display: inline-block !important;
-    vertical-align: middle !important;
-  }
-  .swagger-ui .info .title {
-    font-size: 24px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-    display: block !important;
-    text-align: center !important;
-    margin-bottom: 20px !important;
-  }
 `;
 
 const customOptions = {

@@ -20,7 +20,7 @@ const options = {
       }
     ]
   },
-  apis: ['src/routes.ts'], // paths to files containing OpenAPI annotations
+  apis: ['./src/routes.ts'], // paths to files containing OpenAPI annotations
 };
 
 const specs = swaggerJSDoc(options);

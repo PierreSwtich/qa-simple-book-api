@@ -42,6 +42,4 @@ app.listen(port, () => {
   console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
   console.log(`API served on http://localhost:${port}/api/books`);
   console.log(`Static HTML available at http://localhost:${port}/`);
-  console.log(`Current working directory: ${process.cwd()}`);
-  console.log(`Routes file path: ${path.join(process.cwd(), 'src', 'routes.ts')}`)
 });

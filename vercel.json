@@ -20,7 +20,7 @@
       "dest": "/src/index.ts"
     },
     {
-      "src": "/v1/swagger.json(/.*)?",
+      "src": "/v1/swagger.json",
       "dest": "/src/index.ts"
     },
     {

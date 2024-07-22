@@ -21,6 +21,8 @@ app.use(express.json());
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.use('/custom-swagger.css', express.static(path.join(__dirname, '../public/custom-swagger.css')));
+
 // Swagger UI route
 app.use(
   "/api-docs",

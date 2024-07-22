@@ -1,0 +1,9 @@
+.opblock-summary-path {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  .opblock-summary-description {
+    text-align: left !important;
+  }

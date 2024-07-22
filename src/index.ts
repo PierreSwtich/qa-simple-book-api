@@ -9,11 +9,25 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json());
+
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Swagger UI route
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(specs, {
+  explorer: true,
+  swaggerOptions: {
+    url: '/api-docs/swagger.json'
+  }
+}));
+
+// Serve Swagger specification separately
+app.get('/api-docs/swagger.json', (req, res) => {
+  res.json(specs);
+});
 
 // API routes
 app.use('/api', routes);

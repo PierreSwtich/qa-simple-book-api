@@ -32,6 +32,11 @@ app.get('/v1/swagger.json', (req, res) => {
 // API routes
 app.use('/api', routes);
 
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`Current working directory: ${process.cwd()}`);
+console.log(`API routes file path: ${path.join(process.cwd(), 'src', 'routes.ts')}`);
+
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

@@ -10,6 +10,12 @@ servers:
   - url: https://qa-simple-book-api.vercel.app/api
     description: Production server
 
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Books
+    description: Book management endpoints
+
 components:
   securitySchemes:
     bearerAuth:
@@ -44,6 +50,7 @@ paths:
     post:
       summary: Login and get a JWT token
       tags: [Auth]
+      operationId: login
       requestBody:
         required: true
         content:
@@ -79,9 +86,10 @@ paths:
   /books:
     get:
       summary: Retrieve a list of all books
+      tags: [Books]
+      operationId: getAllBooks
       security:
         - bearerAuth: []
-      tags: [Books]
       responses:
         '200':
           description: A list of books
@@ -96,9 +104,10 @@ paths:
     
     post:
       summary: Create a new book
+      tags: [Books]
+      operationId: createBook
       security:
         - bearerAuth: []
-      tags: [Books]
       requestBody:
         required: true
         content:
@@ -126,6 +135,8 @@ paths:
     
     delete:
       summary: Delete all books
+      tags: [Books]
+      operationId: deleteAllBooks
       security:
         - bearerAuth: []
       responses:
@@ -137,9 +148,10 @@ paths:
   /books/{id}:
     put:
       summary: Update a book
+      tags: [Books]
+      operationId: updateBook
       security:
         - bearerAuth: []
-      tags: [Books]
       parameters:
         - in: path
           name: id
@@ -165,6 +177,8 @@ paths:
     
     delete:
       summary: Delete a book
+      tags: [Books]
+      operationId: deleteBook
       security:
         - bearerAuth: []
       parameters:
@@ -185,6 +199,8 @@ paths:
   /books-pages/paginate:
     get:
       summary: Paginate books
+      tags: [Books]
+      operationId: paginateBooks
       security:
         - bearerAuth: []
       parameters:
@@ -215,6 +231,8 @@ paths:
   /books/filter/title:
     get:
       summary: Filter books by title
+      tags: [Books]
+      operationId: filterBooksByTitle
       security:
         - bearerAuth: []
       parameters:
@@ -232,6 +250,8 @@ paths:
   /books/filter/description:
     get:
       summary: Filter books by description
+      tags: [Books]
+      operationId: filterBooksByDescription
       security:
         - bearerAuth: []
       parameters:

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { verifyToken } from './auth';
-import { Book } from './types';
+import { verifyToken } from '../auth';
+import { Book } from '../types';
 import dotenv from 'dotenv';
 import fs from 'fs-extra';
 import path from 'path';

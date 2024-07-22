@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 // CDN CSS for Swagger UI
-const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.6/swagger-ui.min.css";
 
 // Swagger UI route
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

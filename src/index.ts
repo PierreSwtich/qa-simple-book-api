@@ -14,6 +14,27 @@ console.log('__dirname:', __dirname);
 const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
+const customCss = `
+  .swagger-ui .opblock-summary-path {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .swagger-ui .opblock-summary-description {
+    text-align: left !important;
+  }
+`;
+
+const customOptions = {
+  customCss: customCss,
+  customCssUrl: CSS_URL,
+  customSiteTitle: "Book API Documentation",
+  swaggerOptions: {
+    deepLinking: true,
+    displayOperationId: false,
+  }
+};
+
 const app = express();
 
 app.use(express.json());
@@ -24,14 +45,15 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/custom-swagger.css', express.static(path.join(__dirname, '../public/custom-swagger.css')));
 
 // Swagger UI route
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs, { 
-    customCssUrl: CSS_URL,
-    customSiteTitle: "Book API Documentation"
-  })
-);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, customOptions));
+// app.use(
+//   "/api-docs",
+//   swaggerUi.serve,
+//   swaggerUi.setup(specs, { 
+//     customCssUrl: CSS_URL,
+//     customSiteTitle: "Book API Documentation"
+//   })
+// );
 
 app.get('/v1/swagger.json', (req, res) => {
   res.json(specs);

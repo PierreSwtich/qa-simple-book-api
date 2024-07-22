@@ -25,7 +25,7 @@ app.use(
 );
 
 app.get('/v1/swagger.json', (req, res) => {
-  console.log('Swagger specs:', JSON.stringify(specs, null, 2))
+  // console.log('Swagger specs:', JSON.stringify(specs, null, 2))
   res.json(specs);
 });
 

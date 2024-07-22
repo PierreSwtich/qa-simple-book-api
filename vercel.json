@@ -20,6 +20,10 @@
       "dest": "/src/index.ts"
     },
     {
+      "src": "/v1/swagger.json(/.*)?",
+      "dest": "/src/index.ts"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }

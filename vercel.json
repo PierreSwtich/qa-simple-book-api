@@ -12,6 +12,10 @@
   ],
   "routes": [
     {
+      "src": "/custom-swagger.css",
+      "dest": "/public/custom-swagger.css"
+    },
+    {
       "src": "/api(/|$)(.*)",
       "dest": "/src/index.ts"
     },

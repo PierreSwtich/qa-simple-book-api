@@ -14,17 +14,24 @@ console.log('__dirname:', __dirname);
 const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
-const customCss = `
+  const customCss = `
   .swagger-ui .opblock-summary-path {
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+  }
+  .swagger-ui .opblock-summary-path a {
+    text-decoration: none !important;
   }
   .swagger-ui .opblock-summary-description {
     text-align: left !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
   }
   .swagger-ui .opblock-summary {
     display: flex !important;
@@ -54,7 +61,7 @@ const customOptions = {
   customSiteTitle: "Book API Documentation",
   swaggerOptions: {
     deepLinking: true,
-    displayOperationId: false,
+    displayOperationId: true,
   }
 };
 

@@ -8,10 +8,6 @@
     {
       "src": "public/**",
       "use": "@vercel/static"
-    },
-    {
-      "src": "/api-docs",
-      "dest": "@vercel/node"
     }
   ],
   "routes": [

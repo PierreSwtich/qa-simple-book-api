@@ -8,6 +8,10 @@
     {
       "src": "public/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "src/swagger-ui.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [

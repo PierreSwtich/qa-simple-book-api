@@ -20,8 +20,7 @@ const options = {
       }
     ]
   },
-  apis: [path.join(process.cwd(), 'src', 'routes.ts')],
-  paths: [path.join(process.cwd(), 'src', 'routes.ts')] // paths to files containing OpenAPI annotations
+  apis: [path.join(process.cwd(), 'src', 'routes.ts')] // paths to files containing OpenAPI annotations
 };
 
 console.log(`Swagger configuration: ${JSON.stringify(options, null, 2)}`);

@@ -4,9 +4,10 @@ import specs from './swagger';
 import dotenv from 'dotenv';
 import path from 'path';
 import routes from './routes';
-import fs from 'fs';
 
 dotenv.config();
+const CSS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
 const app = express();
 
@@ -19,13 +20,19 @@ app.use(express.static(path.join(__dirname, '../public')));
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Serve Swagger specification
-const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.1/swagger-ui.css' };
-const spec = JSON.parse(
-    fs.readFileSync(path.join(__dirname, './books.json'), 'utf8')
-);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, options));
+// const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.css' };
+// const spec = JSON.parse(
+//     fs.readFileSync(path.join(__dirname, './books.json'), 'utf8')
+// );
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, options));
 
 // Serve Swagger specification separately
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { customCssUrl: CSS_URL })
+);
+
 app.get('/api-docs/swagger.json', (req, res) => {
   res.json(specs);
 });

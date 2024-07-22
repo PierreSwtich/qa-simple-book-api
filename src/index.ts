@@ -26,7 +26,7 @@ app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(specs, { 
-    customCssUrl: '/swagger-ui.css',
+    customCssUrl: CSS_URL,
     customSiteTitle: "Book API Documentation"
   })
 );

@@ -7,6 +7,10 @@ import routes from './routes';
 
 dotenv.config();
 
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Current working directory:', process.cwd());
+console.log('__dirname:', __dirname);
+
 const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
@@ -25,6 +29,8 @@ app.use(
 );
 
 app.get('/v1/swagger.json', (req, res) => {
+  console.log('Swagger spec requested');
+  console.log('Specs:', JSON.stringify(specs, null, 2));
   res.json(specs);
 });
 

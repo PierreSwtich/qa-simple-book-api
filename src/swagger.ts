@@ -1,5 +1,12 @@
 import swaggerJSDoc from 'swagger-jsdoc';
 import path from 'path';
+import fs from 'fs'
+
+const currentDir = __dirname;
+console.log('Current directory:', currentDir);
+
+const tsFiles = fs.readdirSync(currentDir).filter(file => file.endsWith('.ts'));
+console.log('TS files found:', tsFiles);
 
 const options = {
   definition: {
@@ -24,5 +31,6 @@ const options = {
 };
 
 const specs = swaggerJSDoc(options);
+console.log('Generated Swagger spec:', JSON.stringify(specs, null, 2));
 
 export default specs;

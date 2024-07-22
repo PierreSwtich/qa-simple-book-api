@@ -15,6 +15,12 @@ const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
   const customCss = `
+    opblock-summary-description {
+      padding-left: 10px;
+    }
+    opblock-summary-path {
+      display: inline;
+    }
 `;
 
 const customOptions = {
@@ -23,7 +29,7 @@ const customOptions = {
   customSiteTitle: "Book API Documentation",
   swaggerOptions: {
     deepLinking: true,
-    displayOperationId: true,
+    displayOperationId: false,
   }
 };
 

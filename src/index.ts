@@ -24,6 +24,7 @@ const CSS_URL =
   }
   .swagger-ui .opblock-summary-path a {
     text-decoration: none !important;
+    color: inherit !important;
   }
   .swagger-ui .opblock-summary-description {
     text-align: left !important;
@@ -38,7 +39,6 @@ const CSS_URL =
     justify-content: space-between !important;
     align-items: center !important;
   }
-  .swagger-ui .opblock-summary-path, 
   .swagger-ui .opblock-summary-method, 
   .swagger-ui .opblock-summary-description, 
   .swagger-ui .opblock-summary-operation-id {

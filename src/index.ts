@@ -19,7 +19,7 @@ const CSS_URL =
       padding-left: 10px;
     }
     .opblock-summary-path {
-      display: inline;
+      display: inline !important;
     }
 `;
 

@@ -15,6 +15,11 @@ tags:
     description: Authentication endpoints
   - name: Books
     description: Book management endpoints
+  - name: Content
+    description: Manage Books Content
+  - name: Delete
+    description: Delete Content
+  - name: 
 
 components:
   securitySchemes:
@@ -104,7 +109,7 @@ paths:
     
     post:
       summary: Create a new book
-      tags: [Books]
+      tags: [Content]
       operationId: createBook
       security:
         - bearerAuth: []
@@ -135,7 +140,7 @@ paths:
     
     delete:
       summary: Delete all books
-      tags: [Books]
+      tags: [Delete]
       operationId: deleteAllBooks
       security:
         - bearerAuth: []
@@ -146,9 +151,34 @@ paths:
           description: Internal server error
 
   /books/{id}:
+    get:
+      summary: Retrieve a specific book by its id
+      tags: [Books]
+      operationId: retrieveBook
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The book ID
+      responses:
+        '200':
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
+        '500':
+          description: Internal server error
+
     put:
       summary: Update a book
-      tags: [Books]
+      tags: [Content]
       operationId: updateBook
       security:
         - bearerAuth: []
@@ -174,10 +204,10 @@ paths:
           description: Book not found
         '500':
           description: Internal server error
-    get:
-      summary: Retrieve a specific book by its id
-      tags: [Books]
-      operationId: retrieveBook
+
+    patch:
+      summary: Partially update a book
+      tags: [Content]
       security:
         - bearerAuth: []
       parameters:
@@ -187,13 +217,24 @@ paths:
           schema:
             type: string
           description: The book ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                pages:
+                  type: integer
       responses:
         '200':
-          description: Book found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book'
+          description: Book updated successfully
+        '400':
+          description: Invalid input
         '404':
           description: Book not found
         '500':
@@ -201,7 +242,7 @@ paths:
   
     delete:
       summary: Delete a book
-      tags: [Books]
+      tags: [Delete]
       operationId: deleteBook
       security:
         - bearerAuth: []

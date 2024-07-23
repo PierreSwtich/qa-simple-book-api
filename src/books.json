@@ -34,5 +34,11 @@
     "title": "Tet",
     "description": "",
     "pages": 1
+  },
+  "02873753-dd65-4cdb-b8c9-72874ddaf2c0": {
+    "id": "02873753-dd65-4cdb-b8c9-72874ddaf2c0",
+    "title": "TestNewBookRemote",
+    "description": "TestNewBookRemote",
+    "pages": 311
   }
 }

@@ -174,7 +174,31 @@ paths:
           description: Book not found
         '500':
           description: Internal server error
-    
+    get:
+      summary: Retrieve a specific book by its id
+      tags: [Books]
+      operationId: retrieveBook
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The book ID
+      responses:
+        '200':
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
+        '500':
+          description: Internal server error
+  
     delete:
       summary: Delete a book
       tags: [Books]

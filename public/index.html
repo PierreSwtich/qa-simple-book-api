@@ -17,7 +17,7 @@
         <h2>API Endpoints</h2>
 
         <div class="endpoint">
-          <h2>GET /api/books</h2>
+          <h3>GET /api/books</h3>
           <p>Retrieve all books.</p>
           <pre>
 curl -X GET "https://your-project.vercel.app/api/books" -H "Authorization: Bearer YOUR_TOKEN"
@@ -25,15 +25,15 @@ curl -X GET "https://your-project.vercel.app/api/books" -H "Authorization: Beare
         </div>
 
         <div class="endpoint">
-          <h2>GET /api/books/:id</h2>
+          <h3>GET /api/books/{id}</h3>
           <p>Retrieve a book by ID.</p>
           <pre>
-curl -X GET "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN"
+curl -X GET "https://your-project.vercel.app/api/books/{id}" -H "Authorization: Bearer YOUR_TOKEN"
           </pre>
         </div>
 
         <div class="endpoint">
-          <h2>POST /api/books</h2>
+          <h3>POST /api/books</h3>
           <p>Create a new book. Do not include the ID in the request body.</p>
           <pre>
 curl -X POST "https://your-project.vercel.app/api/books" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
@@ -45,10 +45,10 @@ curl -X POST "https://your-project.vercel.app/api/books" -H "Authorization: Bear
         </div>
 
         <div class="endpoint">
-          <h2>PUT /api/books/:id</h2>
+          <h3>PUT /api/books/{id}</h3>
           <p>Replace a book by ID. You must provide all fields in the request body.</p>
           <pre>
-curl -X PUT "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
+curl -X PUT "https://your-project.vercel.app/api/books/{id}" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
   "title": "Updated Title",
   "description": "Updated Description",
   "pages": 456
@@ -57,25 +57,25 @@ curl -X PUT "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorizatio
         </div>
 
         <div class="endpoint">
-          <h2>PATCH /api/books/:id</h2>
+          <h3>PATCH /api/books/{id}</h3>
           <p>Partially update a book by ID. Only include the fields you want to update.</p>
           <pre>
-curl -X PATCH "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
+curl -X PATCH "https://your-project.vercel.app/api/books/{id}" -H "Authorization: Bearer YOUR_TOKEN" -H "Content-Type: application/json" -d '{
   "title": "Partially Updated Title"
 }'
           </pre>
         </div>
 
         <div class="endpoint">
-          <h2>DELETE /api/books/:id</h2>
+          <h3>DELETE /api/books/{id}</h3>
           <p>Delete a book by ID.</p>
           <pre>
-curl -X DELETE "https://your-project.vercel.app/api/books/BOOK_ID" -H "Authorization: Bearer YOUR_TOKEN"
+curl -X DELETE "https://your-project.vercel.app/api/books/{id}" -H "Authorization: Bearer YOUR_TOKEN"
           </pre>
         </div>
 
         <div class="endpoint">
-          <h2>DELETE /api/books</h2>
+          <h3>DELETE /api/books</h3>
           <p>Delete all books.</p>
           <pre>
 curl -X DELETE "https://your-project.vercel.app/api/books" -H "Authorization: Bearer YOUR_TOKEN"
@@ -83,15 +83,15 @@ curl -X DELETE "https://your-project.vercel.app/api/books" -H "Authorization: Be
         </div>
 
         <div class="endpoint">
-          <h2>GET /api/books-pages</h2>
+          <h3>GET /api/books-pages/paginate</h3>
           <p>Paginate through books. Specify the page number and the limit of books per page.</p>
           <pre>
-curl -X GET "https://your-project.vercel.app/api/books-pages?page=1&limit=3" -H "Authorization: Bearer YOUR_TOKEN"
+curl -X GET "https://your-project.vercel.app/api/books-pages/paginate?page=1&limit=3" -H "Authorization: Bearer YOUR_TOKEN"
           </pre>
         </div>
 
         <div class="endpoint">
-          <h2>GET /api/books/filter/title</h2>
+          <h3>GET /api/books/filter/title</h3>
           <p>Filter books by title.</p>
           <pre>
 curl -X GET "https://your-project.vercel.app/api/books/filter/title?title=Book%20Title" -H "Authorization: Bearer YOUR_TOKEN"
@@ -99,7 +99,7 @@ curl -X GET "https://your-project.vercel.app/api/books/filter/title?title=Book%2
         </div>
 
         <div class="endpoint">
-          <h2>GET /api/books/filter/description</h2>
+          <h3>GET /api/books/filter/description</h3>
           <p>Filter books by description.</p>
           <pre>
 curl -X GET "https://your-project.vercel.app/api/books/filter/description?description=Book%20Description" -H "Authorization: Bearer YOUR_TOKEN"
@@ -107,7 +107,7 @@ curl -X GET "https://your-project.vercel.app/api/books/filter/description?descri
         </div>
 
         <div class="endpoint">
-          <h2>GET /api/books/filter/pages</h2>
+          <h3>GET /api/books/filter/pages</h3>
           <p>Filter books by the number of pages.</p>
           <pre>
 curl -X GET "https://your-project.vercel.app/api/books/filter/pages?pages=123" -H "Authorization: Bearer YOUR_TOKEN"
@@ -115,7 +115,7 @@ curl -X GET "https://your-project.vercel.app/api/books/filter/pages?pages=123" -
         </div>
 
         <div class="endpoint">
-          <h2>POST /api/login</h2>
+          <h3>POST /api/login</h3>
           <p>Authenticate and get a JWT token.</p>
           <pre>
 curl -X POST "https://your-project.vercel.app/api/login" -H "Content-Type: application/json" -d '{
@@ -124,6 +124,53 @@ curl -X POST "https://your-project.vercel.app/api/login" -H "Content-Type: appli
 }'
           </pre>
         </div>
+      </section>
+      <section>
+        <h2>Authentication</h2>
+        <p>This API uses JWT for authentication. You need to include a valid JWT token in the Authorization header for all requests except login.</p>
+        <pre>
+-H "Authorization: Bearer YOUR_TOKEN"
+        </pre>
+      </section>
+      <section>
+        <h2>PostgreSQL Database</h2>
+        <p>This API uses PostgreSQL for data storage. Make sure to set up your PostgreSQL database and provide the connection URL as an environment variable.</p>
+        <pre>
+DATABASE_URL=your_postgres_url
+        </pre>
+      </section>
+      <section>
+        <h2>Installation</h2>
+        <h3>Prerequisites</h3>
+        <ul>
+          <li>Node.js (>=14.x)</li>
+          <li>npm (>=6.x)</li>
+          <li>PostgreSQL (for local development)</li>
+        </ul>
+        <h3>Steps</h3>
+        <ol>
+          <li>Clone the repository:</li>
+          <pre>
+git clone https://github.com/PierreSwtich/qa-simple-book-api.git
+cd qa-simple-book-api
+          </pre>
+          <li>Install dependencies:</li>
+          <pre>
+npm install
+          </pre>
+          <li>Set up environment variables in a `.env` file:</li>
+          <pre>
+SECRET_KEY=your_secret_key
+USERNAMEADMIN=your_username
+PASSWORDADMIN=your_password
+POSTGRES_URL=your_postgres_url
+          </pre>
+          <li>Run the application locally:</li>
+          <pre>
+npm run dev
+          </pre>
+        </ol>
+        <p>The server will start on <code>http://localhost:3000</code>. Swagger UI is available at <code>http://localhost:3000/api-docs</code>.</p>
       </section>
     </div>
   </div>

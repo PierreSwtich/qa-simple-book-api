@@ -1,10 +1,10 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import specs from './swagger';
 import dotenv from 'dotenv';
 import path from 'path';
 import routes from './routes';
-import { initializeDatabase } from './database';  // Import the initializeDatabase function
+import { createTable } from './database';
 
 dotenv.config();
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
@@ -49,15 +49,21 @@ app.use(
 );
 
 app.get('/api-docs/swagger.json', (req, res) => {
-  console.log('Swagger specs:', JSON.stringify(specs, null, 2));  // Log the specs to check content
+  console.log('Swagger specs:', JSON.stringify(specs, null, 2));
   res.json(specs);
 });
 
 // API routes
 app.use('/api', routes);
 
+// Error handling middleware
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 const port = process.env.PORT || 3000;
-initializeDatabase().then(() => {
+createTable().then(() => {
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
     console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
@@ -66,4 +72,6 @@ initializeDatabase().then(() => {
     console.log(`Current working directory: ${process.cwd()}`);
     console.log(`Routes file path: ${path.join(process.cwd(), 'src', 'routes.ts')}`);
   });
+}).catch((error) => {
+  console.error('Error initializing database:', error);
 });

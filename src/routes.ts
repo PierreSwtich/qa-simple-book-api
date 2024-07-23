@@ -1,22 +1,31 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { verifyToken } from './auth';
-// import { Book } from './types';
 import dotenv from 'dotenv';
-import fs from 'fs-extra';
 import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
 import { Book } from './database'
 import { Op } from 'sequelize';
+import {
+  insertBook,
+  getBooks,
+  getBookById,
+  updateBookById,
+  deleteBookById,
+  deleteAllBooks,
+  getPaginatedBooks,
+  filterBooksByTitle,
+  filterBooksByDescription,
+  filterBooksByPages
+} from './database';
 
 dotenv.config();
 
 
 const router = Router();
+
 const secretKey = process.env.SECRET_KEY || 'defaultsecret';
 const usernameAdmin = process.env.USERNAMEADMIN || 'defaultUser';
 const passwordAdmin = process.env.PASSWORDADMIN || 'defaultPassword';
-const dataFilePath = path.join(__dirname, 'books.json');
 
 router.post('/login', (req: Request, res: Response) => {
   const { username: reqUsername, password: reqPassword } = req.body;
@@ -28,34 +37,8 @@ router.post('/login', (req: Request, res: Response) => {
   }
 });
 
-router.get('/books', verifyToken, async (req: Request, res: Response) => {
-  try {
-    const books = await Book.findAll();
-    res.json(books);
-  } catch (error) {
-    console.error('Error retrieving books:', error);
-    res.status(500).send('Error retrieving books');
-  }
-});
-
-
-router.get('/books/:id', verifyToken, async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const book = await Book.findByPk(id);
-    if (book) {
-      res.json(book);
-    } else {
-      res.status(404).send('Book not found');
-    }
-  } catch (error) {
-    console.error('Error retrieving book:', error);
-    res.status(500).send('Error retrieving book');
-  }
-});
-
-
-router.post('/books', verifyToken, async (req: Request, res: Response) => {
+// POST /books - Create a new book
+router.post('/books', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { title, description, pages } = req.body;
 
@@ -70,142 +53,183 @@ router.post('/books', verifyToken, async (req: Request, res: Response) => {
       return res.status(400).send('Description must be a string.');
     }
 
-    const book = await Book.create({ title: title.trim(), description, pages });
+    const book = await insertBook(title.trim(), description, pages);
     res.status(201).json(book);
   } catch (error) {
     console.error('Error saving book:', error);
-    res.status(500).send('Error saving book');
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
+// GET /books - Retrieve all books
+router.get('/books', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const books = await getBooks();
+    res.json(books);
+  } catch (error) {
+    console.error('Error retrieving books:', error);
+    next(error); // Pass the error to the error handling middleware
+  }
+});
 
-router.put('/books/:id', verifyToken, async (req: Request, res: Response) => {
+// GET /books/:id - Retrieve a specific book by its ID
+router.get('/books/:id', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const book = await getBookById(id);
+    if (book) {
+      res.json(book);
+    } else {
+      res.status(404).send('Book not found');
+    }
+  } catch (error) {
+    console.error('Error retrieving book:', error);
+    next(error); // Pass the error to the error handling middleware
+  }
+});
+
+// PUT /books/:id - Update a book by its ID
+router.put('/books/:id', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const { title, description, pages } = req.body;
-    if (!title || !description) {
-      return res.status(400).send('Title and description are required');
+
+    // Ensure all fields are present
+    if (title === undefined || description === undefined || pages === undefined) {
+      return res.status(400).send('All book fields (title, description, pages) must be specified');
     }
 
-    const book = await Book.findByPk(id);
+    // Validation
+    if (typeof title !== 'string' || title.trim().length < 3) {
+      return res.status(400).send('Title must be at least 3 characters long.');
+    }
+    if (typeof pages !== 'number' || pages < 1) {
+      return res.status(400).send('Pages must be a number and at least 1.');
+    }
+    if (typeof description !== 'string') {
+      return res.status(400).send('Description must be a string.');
+    }
+
+    const book = await updateBookById(id, title.trim(), description, pages);
     if (book) {
-      book.title = title;
-      book.description = description;
-      book.pages = pages;
-      await book.save();
       res.json(book);
     } else {
       res.status(404).send('Book not found');
     }
   } catch (error) {
     console.error('Error updating book:', error);
-    res.status(500).send('Error updating book');
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
-
-router.delete('/books/:id', verifyToken, async (req: Request, res: Response) => {
+// PATCH /books/:id - Partially update a book by its ID
+router.patch('/books/:id', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const book = await Book.findByPk(id);
+    const { title, description, pages } = req.body;
+
+    // Fetch the current book details
+    const existingBook = await getBookById(id);
+    if (!existingBook) {
+      return res.status(404).send('Book not found');
+    }
+
+    // Update only provided fields
+    const updatedTitle = title !== undefined ? title.trim() : existingBook.title;
+    const updatedDescription = description !== undefined ? description : existingBook.description;
+    const updatedPages = pages !== undefined ? pages : existingBook.pages;
+
+    // Validation
+    if (updatedTitle !== existingBook.title && (typeof updatedTitle !== 'string' || updatedTitle.length < 3)) {
+      return res.status(400).send('Title must be at least 3 characters long.');
+    }
+    if (updatedPages !== existingBook.pages && (typeof updatedPages !== 'number' || updatedPages < 1)) {
+      return res.status(400).send('Pages must be a number and at least 1.');
+    }
+    if (updatedDescription !== existingBook.description && typeof updatedDescription !== 'string') {
+      return res.status(400).send('Description must be a string.');
+    }
+
+    const book = await updateBookById(id, updatedTitle, updatedDescription, updatedPages);
+    res.json(book);
+  } catch (error) {
+    console.error('Error updating book:', error);
+    next(error); // Pass the error to the error handling middleware
+  }
+});
+
+// DELETE /books/:id - Delete a book by its ID
+router.delete('/books/:id', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const book = await deleteBookById(id);
     if (book) {
-      await book.destroy();
       res.sendStatus(204);
     } else {
       res.status(404).send('Book not found');
     }
   } catch (error) {
     console.error('Error deleting book:', error);
-    res.status(500).send('Error deleting book');
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
-
-router.delete('/books', verifyToken, async (req: Request, res: Response) => {
+// DELETE /books - Delete all books
+router.delete('/books', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await Book.destroy({ where: {}, truncate: true });
+    await deleteAllBooks();
     res.sendStatus(204);
   } catch (error) {
     console.error('Error deleting all books:', error);
-    res.status(500).send('Error deleting all books');
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
-
-
-router.get('/books-pages/paginate', verifyToken, async (req: Request, res: Response) => {
+// GET /books-pages/paginate - Paginate books
+router.get('/books-pages/paginate', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { page = 1, limit = 10 } = req.query;
-    const books = await Book.findAndCountAll({
-      limit: Number(limit),
-      offset: (Number(page) - 1) * Number(limit),
-    });
-    res.json({
-      totalItems: books.count,
-      totalPages: Math.ceil(books.count / Number(limit)),
-      currentPage: Number(page),
-      books: books.rows
-    });
+    const paginatedBooks = await getPaginatedBooks(Number(page), Number(limit));
+    res.json(paginatedBooks);
   } catch (error) {
     console.error('Error paginating books:', error);
-    res.status(500).send('Error paginating books');
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
-
-
-router.get('/books/filter/title', verifyToken, async (req: Request, res: Response) => {
+// GET /books/filter/title - Filter books by title
+router.get('/books/filter/title', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { title } = req.query;
-    const books = await Book.findAll({
-      where: {
-        title: {
-          [Op.like]: `%${title}%`
-        }
-      }
-    });
-    res.json(books);
+    const filteredBooks = await filterBooksByTitle(title as string);
+    res.json(filteredBooks);
   } catch (error) {
     console.error('Error filtering books by title:', error);
-    res.status(500).send('Error filtering books by title');
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
-
-router.get('/books/filter/description', verifyToken, async (req: Request, res: Response) => {
+// GET /books/filter/description - Filter books by description
+router.get('/books/filter/description', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { description } = req.query;
-    const books = await Book.findAll({
-      where: {
-        description: {
-          [Op.like]: `%${description}%`
-        }
-      }
-    });
-    res.json(books);
+    const filteredBooks = await filterBooksByDescription(description as string);
+    res.json(filteredBooks);
   } catch (error) {
     console.error('Error filtering books by description:', error);
-    res.status(500).send('Error filtering books by description');
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
-
-router.patch('/books/:id', verifyToken, async (req: Request, res: Response) => {
+// GET /books/filter/pages - Filter books by pages
+router.get('/books/filter/pages', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
-    const updates = req.body;
-
-    const book = await Book.findByPk(id);
-    if (book) {
-      Object.assign(book, updates);
-      await book.save();
-      res.json(book);
-    } else {
-      res.status(404).send('Book not found');
-    }
+    const { pages } = req.query;
+    const filteredBooks = await filterBooksByPages(Number(pages));
+    res.json(filteredBooks);
   } catch (error) {
-    console.error('Error updating book:', error);
-    res.status(500).send('Error updating book');
+    console.error('Error filtering books by pages:', error);
+    next(error); // Pass the error to the error handling middleware
   }
 });
 
